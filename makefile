@@ -1,5 +1,6 @@
-TARGET_EXEC = a.out
-BUILD_DIR = ./build/$(shell $(CC) -dumpmachine)
+TARGET_EXEC = ../$(shell $(CC) -dumpmachine).bin
+BUILDS_DIR = ./build
+BUILD_DIR = $(BUILDS_DIR)/build-$(shell $(CC) -dumpmachine)
 SRC_DIRS = ./src
 
 SRCS = $(shell find $(SRC_DIRS) -name *.c -or -name *.s)
@@ -18,6 +19,6 @@ $(BUILD_DIR)/%.c.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	$(RM) -r $(BUILD_DIR)
+	$(RM) -r $(BUILDS_DIR)/build-*/ $(BUILDS_DIR)/*.bin
 
 MKDIR_P ?= mkdir -p
