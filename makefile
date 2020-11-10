@@ -1,3 +1,4 @@
+EXEC_EXT ?= bin
 TARGET_EXEC ?= $(shell $(CC) -dumpmachine)
 BUILDS_DIR = ./build
 BUILD_DIR = $(BUILDS_DIR)/build-$(TARGET_EXEC)
@@ -9,7 +10,7 @@ DEPS = $(OBJS:.o=.d)
 
 CFLAGS ?= -Wall -Wextra $(ADDITIONAL_CFLAGS)
 
-$(BUILDS_DIR)/$(TARGET_EXEC).bin: $(OBJS)
+$(BUILDS_DIR)/$(TARGET_EXEC).$(EXEC_EXT): $(OBJS)
 	$(CC) $(OBJS) -o $@ $(LDFLAGS) $(CFLAGS)
 $(BUILD_DIR)/%.s.o: %.s
 	$(MKDIR_P) $(dir $@)
@@ -19,6 +20,6 @@ $(BUILD_DIR)/%.c.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	$(RM) -r $(BUILDS_DIR)/build-*/ $(BUILDS_DIR)/*.bin
+	$(RM) -r $(BUILDS_DIR)/build-*/ $(BUILDS_DIR)/*.$(EXEC_EXT) $(BUILDS_DIR)/*.exe
 
 MKDIR_P ?= mkdir -p
