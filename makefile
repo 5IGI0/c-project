@@ -7,10 +7,10 @@ SRCS = $(shell find $(SRC_DIRS) -name *.c -or -name *.s)
 OBJS = $(SRCS:%=$(BUILD_DIR)/%.o)
 DEPS = $(OBJS:.o=.d)
 
-CFLAGS ?= -Wall -Wextra
+CFLAGS ?= -Wall -Wextra $(ADDITIONAL_CFLAGS)
 
 $(BUILDS_DIR)/$(TARGET_EXEC).bin: $(OBJS)
-	$(CC) $(OBJS) -o $@ $(LDFLAGS)
+	$(CC) $(OBJS) -o $@ $(LDFLAGS) $(CFLAGS)
 $(BUILD_DIR)/%.s.o: %.s
 	$(MKDIR_P) $(dir $@)
 	$(AS) $(ASFLAGS) -c $< -o $@
