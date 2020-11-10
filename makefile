@@ -1,6 +1,6 @@
-TARGET_EXEC = ../$(shell $(CC) -dumpmachine).bin
+TARGET_EXEC ?= $(shell $(CC) -dumpmachine)
 BUILDS_DIR = ./build
-BUILD_DIR = $(BUILDS_DIR)/build-$(shell $(CC) -dumpmachine)
+BUILD_DIR = $(BUILDS_DIR)/build-$(TARGET_EXEC)
 SRC_DIRS = ./src
 
 SRCS = $(shell find $(SRC_DIRS) -name *.c -or -name *.s)
@@ -9,7 +9,7 @@ DEPS = $(OBJS:.o=.d)
 
 CFLAGS ?= -Wall -Wextra
 
-$(BUILD_DIR)/$(TARGET_EXEC): $(OBJS)
+$(BUILDS_DIR)/$(TARGET_EXEC).bin: $(OBJS)
 	$(CC) $(OBJS) -o $@ $(LDFLAGS)
 $(BUILD_DIR)/%.s.o: %.s
 	$(MKDIR_P) $(dir $@)
